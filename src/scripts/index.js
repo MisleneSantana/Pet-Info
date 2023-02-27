@@ -1,1 +1,4 @@
-/* Desenvolva seu código aqui */
+import { handleLogin } from '../scripts/render.js';
+
+handleLogin();
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/styles/reset.css" />
+    <link rel="stylesheet" href="src/styles/globalStyles.css" />
+    <link rel="stylesheet" href="src/styles/index.css" />
+    <link rel="stylesheet" href="src/styles/register.css" />
+    <link rel="stylesheet" href="src/styles/homePost.css" />
+
+    <!-- FONTE -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- JS -->
+    <script type="module" src="src/scripts/index.js" defer></script>
+
+    <title>Login</title>
+</head>
+
+<body>
+    <main class="main__container">
+        <section class="aboutUs__container">
+            <div>
+                <h1 class="aboutUs__logo">Petinfo</h1>
+                <h1 class="aboutUs__mainSlogan"><strong>Amor</strong> e <strong>carinho</strong> por meio do
+                    conhecimento
+                </h1>
+                <h3 class="aboutUs__secondarySlogan">Todas as informações para melhorar a vida do seu pet em um só lugar
+                </h3>
+                <div class="images__container">
+                    <div class="images__mainImages">
+                        <div>
+                            <img class="images__cat1" src="src/assets/img/Cat1.svg" alt="Cat">
+                            <img class="images__dog2" src="src/assets/img/Dog2.svg" alt="Dog">
+                        </div>
+                        <div>
+                            <img class="images__dog3" src="src/assets/img/Dog3.svg" alt="Dog">
+                        </div>
+                    </div>
+                    <div class="images__sideImage">
+                        <img class="images__cat4" src="src/assets/img/Cat4.svg" alt="Cat">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="form__container">
+            <form>
+                <h2>Login</h2>
+                <div class="form__inputs">
+                    <div>
+                        <label class="form__inputTag">Email</label>
+                        <input class="form__emailUser" type="email" name="email" placeholder="Digite seu email aqui"
+                            required>
+                    </div>
+                    <div>
+                        <label class="form__inputTag">Senha</label>
+                        <input class="form__userPassword" type="password" name="password"
+                            placeholder="Digite sua senha aqui" required>
+                        <p class="form__incorrectPassword"></p>
+                    </div>
+                </div>
+                <div class="form__buttons">
+                    <button class="form__loginButton" type="submit">Acessar</button>
+                    <h3>Ainda não possui conta?</h3>
+                    <h4>Clicando no botão abaixo, você pode se cadastrar rapidamente</h4>
+                    <button class="form__registerButton" type="submit">Cadastrar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../styles/reset.css" />
+    <link rel="stylesheet" href="../styles/globalStyles.css" />
+    <link rel="stylesheet" href="../styles/index.css" />
+    <link rel="stylesheet" href="../styles/register.css" />
+    <link rel="stylesheet" href="../styles/homePost.css" />
+
+    <!-- FONTE -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <script type="module" src="../scripts/register.js"></script>
+
+    <title>Register</title>
+</head>
+
+<body>
+    <main class="mainRegister__container">
+
+        <section class="formRegister__container">
+            <form>
+                <div class="formRegister__header">
+                    <h2>Cadastro</h2>
+                    <a href="../../index.html" target="_self">Voltar para o Login</a>
+                </div>
+                <div class="formRegister__inputs">
+                    <label class="formRegister__inputTag">Usuário</label>
+                    <input class="formRegister__user" type="text" name="nameUser" placeholder="Digite seu usuário aqui"
+                        required>
+                    <label class="formRegister__inputTag">Email</label>
+                    <input class="formRegister__emailUser" type="email" name="email" placeholder="Digite seu email aqui"
+                        required>
+                    <label class="formRegister__inputTag">Link da foto de perfil</label>
+                    <input class="formRegister__userPhoto" type="text" name="image" placeholder="Insira o link aqui"
+                        required>
+                    <label class="formRegister__inputTag">Senha</label>
+                    <input class="formRegister__userPassword" type="password" name="password"
+                        placeholder="Digite sua senha aqui" required>
+                </div>
+                <div class="formRegister__buttons">
+                    <button class="formRegister_registerButton" type="submit">Cadastrar</button>
+                    <div><a href="../../index.html" target="_self">Voltar para o Login</a></div>
+                </div>
+            </form>
+        </section>
+
+        <section class="registration__container">
+            <h1 class="registration__logo">Petinfo</h1>
+            <h1 class="registration__success"><strong>Ooooooba!</strong></h1>
+            <h3 class="registration__message">Agora vamos poder contribuir para o bem estar do seu pet por meio do
+                conhecimento</h3>
+            <div class="registrationImages__container">
+                <div class="registrationImages__sideImage">
+                    <figure>
+                        <img src="../assets/img/Cat5.svg" alt="Cat">
+                    </figure>
+                </div>
+                <div class="registrationImages__mainImages">
+                    <figure>
+                        <img src="../assets/img/Cat6.svg" alt="Cat">
+                        <img src="../assets/img/Cat7.svg" alt="Dog">
+                        <img src="../assets/img/Cat8.svg" alt="Cat">
+                    </figure>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>
