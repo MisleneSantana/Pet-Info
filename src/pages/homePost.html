@@ -24,7 +24,71 @@
 </head>
 
 <body>
+    <header class="header__container">
+        <h2 class="header__logo">PetInfo</h2>
+        <nav class="nav__container">
+            <button class="nav__buttonCreatePost" type="button">Criar publicação</button>
+            <img class="nav__userImage" src="" alt="LoggedUser">
+        </nav>
+    </header>
 
+    <div class="fixedTitle">
+        <h2>Feed</h2>
+    </div>
+
+    <main class="main__container">
+        <ul class="post__container">
+            <!-- <li id="post_1" class="main__post">
+                <div class="main__postUser">
+                    <div class="main__postUser--user">
+                        <img src="#" alt="User Photo">
+                        <p>Nome do usuário</p>
+                    </div>
+                    <div class="main__postUser--buttons">
+                        <button>Editar</button>
+                        <button>Excluir</button>
+                    </div>
+                </div>
+                <div class="main__postContent">
+                    <h1>Title</h1>
+                    <p>Content</p>
+                </div>
+                <div class="main__post--buttonModal">
+                    <button id="showModal_1">Acessar Publicação</button>
+                </div>
+            </li> -->
+        </ul>
+
+
+        <ul class="main__cardPost">
+
+        </ul>
+    </main>
+
+    <dialog id="modalControl-createPost">
+        <!-- <form class="modalCreatePost__container">
+            <div class="modalCreatePost__header">
+                <h1>Criando novo post</h1>
+                <img src="../assets/img/FecharModal.svg" alt="Button X">
+            </div>
+            <div class="modalCreatePost__main">
+                <div class="modalCreatePost__inputs">
+                    <label for="title">Título do Post</label>
+                    <input class="modalCreatePost__inputPost" type="text" name="title"
+                        placeholder="Digite o título aqui..." required>
+                </div>
+                <div class="modalCreatePost__inputs">
+                    <label for="content">Conteúdo do Post</label>
+                    <input class="modalCreatePost__inputPost" type="text" name="content"
+                        placeholder="Desenvolva o conteúdo do post aqui..." required>
+                </div>
+            </div>
+            <div class="modalCreatePost__buttons">
+                <button classe="modalCreatePost__buttons--cancel" type="submit">Cancelar</button>
+                <button classe="modalCreatePost__buttons--publish" type="submit">Publicar</button>
+            </div>
+        </form> -->
+    </dialog>
 </body>
 
 </html>
