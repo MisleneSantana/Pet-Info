@@ -28,7 +28,7 @@
         <h2 class="header__logo">PetInfo</h2>
         <nav class="nav__container">
             <button class="nav__buttonCreatePost" type="button">Criar publicação</button>
-            <img class="nav__userImage" src="" alt="LoggedUser">
+            <!-- <img class="nav__userImage" src="" alt="LoggedUser"> -->
         </nav>
     </header>
 
@@ -43,10 +43,11 @@
                     <div class="main__postUser--user">
                         <img src="#" alt="User Photo">
                         <p>Nome do usuário</p>
+                        <small class="main__postUser--data">Data Post</small>
                     </div>
                     <div class="main__postUser--buttons">
-                        <button>Editar</button>
-                        <button>Excluir</button>
+                        <button class="main__postUser--edit">Editar</button>
+                        <button class="main__postUser--delete">Excluir</button>
                     </div>
                 </div>
                 <div class="main__postContent">
@@ -74,12 +75,12 @@
             <div class="modalCreatePost__main">
                 <div class="modalCreatePost__inputs">
                     <label for="title">Título do Post</label>
-                    <input class="modalCreatePost__inputPost" type="text" name="title"
+                    <input class="modalCreatePost__inputPost" type="text" name="title id=title"
                         placeholder="Digite o título aqui..." required>
                 </div>
                 <div class="modalCreatePost__inputs">
                     <label for="content">Conteúdo do Post</label>
-                    <input class="modalCreatePost__inputPost" type="text" name="content"
+                    <input class="modalCreatePost__inputPost" type="text" name="content" id="content"
                         placeholder="Desenvolva o conteúdo do post aqui..." required>
                 </div>
             </div>
@@ -89,6 +90,56 @@
             </div>
         </form> -->
     </dialog>
+
+    <dialog id="modalControl-showPost">
+        <!-- <div class="modalShowPost__container">
+            <div class="modalShowPost__user">
+                <div class="modalShowPost__user--user">
+                    <img src="#" alt="User Photo">
+                    <p>Data Post</p>
+                </div>
+                <img src="../assets/img/FecharModal.svg" alt="Button X">
+            </div>
+            <div class="modalShowPost__postContent">
+                <h1>Title</h1>
+                <p>Content</p>
+            </div>
+        </div> -->
+    </dialog>
+
+    <dialog id="modalControl-patchPost">
+        <!-- <form class="modalPatchPost__container">
+            <div class="modalPatchPost__header">
+                <h3>Edição</h3>
+                <img class="modalPatchPost__closeEditPost" src="../assets/img/FecharModal.svg" alt="Button X">
+            </div>
+            <div class="modalPatchPost__postContent">
+                <label for="title">Título do Post</label>
+                <input class="edit__input" type="text" name="title" id="title"></input>
+                <label for="content">Conteúdo do post</label>
+                <textarea class="edit__textarea" name="content" id="content"></textarea>
+            </div>
+            <div class="modalPatchPost__buttons">
+                <button class="modalPatchPost__buttons--calcel" type="submit">Cancelar</button>
+                <button class="modalPatchPost__buttons--toSave" type="submit">Salvar alterações</button>
+            </div>
+        </form> -->
+    </dialog>
+
+    <dialog id="modalControl-deletePost">
+        <!-- <form class="modalDeletePost__container">
+            <div class="modalDeletePost__header">
+                <h2>Confirmação de exclusão</h2>
+                <img class="modalDeletePost__imgClose" src="../assets/img/FecharModal.svg" alt="Button X">
+            </div>
+            <h1>Tem certeza que deseja excluir este post?</h1>
+            <p>Essa ação não poderá ser desfeita, então pedimos que tenha confirme antes de concluir</p>
+            <div class="modalDeletePost__buttons"></div>
+            <button type="submit">Cancelar</button>
+            <button id="modalDeletePost__confirmeDelete" type="submit">Sim, excluir este post</button>
+        </form> -->
+    </dialog>
+
 </body>
 
 </html>

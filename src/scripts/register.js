@@ -4,7 +4,7 @@ function authentication() {
     const tokenLocalStorage = localStorage.getItem('@petInfoToken:token');
 
     if (tokenLocalStorage) {
-        window.location.replace('./homePost.html');
+        window.location.replace('./src/pages/homePost.html');
     }
 }
 
@@ -43,6 +43,6 @@ function handleNewUser() {
 }
 
 handleNewUser();
-authentication();
+// authentication();
 
 

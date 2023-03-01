@@ -1,0 +1,17 @@
+.main__postUser--user>img,
+.nav__userImage,
+.modalShowPost__avatar {
+    width: 2.5625rem;
+    height: 2.5625rem;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    object-fit: cover;
+}
+
+.main__postUser--user>img:hover,
+.nav__userImage:hover,
+.modalShowPost__avatar:hover {
+    border: 1px solid var(--brand100);
+}
+
+.main__postUser--data {}

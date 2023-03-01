@@ -24,11 +24,32 @@ export const login = async (loginBody) => {
                     .then(responseError => {
                         const invalidData = document.querySelector('.form__incorrectPassword');
                         invalidData.innerText = (responseError.message);
-                    })
-            }
-        })
-    console.log(token);
+                    });
+            };
+        });
+    // console.log(token);
     return token;
+}
+
+export const requestGetloggedUser = async () => {
+    const userLoged = await fetch(`${baseUrl}/users/profile`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tokenLocalStorage.token}`
+        },
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                response.json()
+                    .then(responseError => {
+                        alert(responseError.message);
+                    })
+            };
+        });
+    return userLoged;
 }
 
 export const registerNewUser = async (createRegisterBody) => {
@@ -99,4 +120,52 @@ export const requestGetAllPosts = async () => {
     console.log(posts);
     return posts;
 }
+
+export const requestUpdatePost = async (postId, updatePostBody) => {
+    const post = await fetch(`${baseUrl}/posts/${postId}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tokenLocalStorage.token}`
+        },
+        body: JSON.stringify(updatePostBody)
+    }).then((response) => {
+        if (response.ok) {
+            alert('Post atualizado com sucesso');
+            return response.json();
+        } else {
+            response.json()
+                .then(responseError => {
+                    alert(responseError.message);
+                });
+        };
+    });
+    return post;
+}
+
+export const requestDeletePost = async (postId) => {
+    const deletePost = await fetch(`${baseUrl}/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tokenLocalStorage.token}`
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('Post deletado com sucesso');
+                // localStorage.clear(); //Limpo o localStorage para tirar o acesso do usuário a aplicação.
+                return response.json();
+            } else {
+                response.json()
+                    .then(responseError => {
+                        alert(responseError.message);
+                    })
+            };
+        });
+    return deletePost;
+};
+
+
+
 
