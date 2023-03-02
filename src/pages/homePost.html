@@ -29,16 +29,16 @@
             <h2 class="header__logo">Petinfo</h2>
             <nav class="nav__container">
                 <button class="nav__buttonCreatePost" type="button">Criar publicação</button>
-                <!-- <img class="nav__userImage" src="" alt="LoggedUser"> -->
-                <dialog id="logout__container">
-                    <div class="logout__header">
-                        <!-- <p class="header__logout--username">Name User</p> -->
-                        <div class="logout__exit">
-                            <img src="../assets/img/logout.png" alt="icon-exit">
-                            <button>Sair da conta</button>
-                        </div>
+                <div class="nav__imageContainer">
+                    <!-- <img class="nav__userImage" src="" alt="LoggedUser"> -->
+                </div>
+                <div class="logout__header">
+                    <!-- <p class="header__logout--username">Name User</p> -->
+                    <div class="logout__exit">
+                        <img src="../assets/img/logout.png" alt="icon-exit">
+                        <button class="logout__button">Sair da conta</button>
                     </div>
-                </dialog>
+                </div>
             </nav>
         </header>
 
@@ -76,6 +76,16 @@
 
             </ul>
         </main>
+
+        <!-- <div class="toast__container">
+            <div class="toast__containerResponse">
+                <div class="toast__iconContainer">
+                    <img src="../assets/img/check-solid (2).svg" alt="icon-check">
+                </div>
+                <p>Post deletado com sucesso!</p>
+            </div>
+            <p>O post selecionado para exclusão foi deletado e a partir de agora não aparecerá no seu feed.</p>
+        </div> -->
     </div>
 
 </body>
@@ -89,13 +99,13 @@
         <div class="modalCreatePost__main">
             <div class="modalCreatePost__inputs">
                 <label for="title" class="modalCreatePost__inputs--title">Título do Post</label>
-                <input class="modalCreatePost__inputPost" type="text" name="title id=title"
-                    placeholder="Digite o título aqui..." required>
+                <input class="modalCreatePost__inputPost modalCreatePost__inputPost--styleTitle" type="text"
+                    name="title id=title" placeholder="Digite o título aqui..." required>
             </div>
             <div class="modalCreatePost__inputs">
                 <label for="content" class="modalCreatePost__inputs--content">Conteúdo do Post</label>
-                <input class="modalCreatePost__inputPost" type="text" name="content" id="content"
-                    placeholder="Desenvolva o conteúdo do post aqui..." required>
+                <input class="modalCreatePost__inputPost modalCreatePost__inputPost--styleContent" type="text"
+                    name="content" id="content" placeholder="Desenvolva o conteúdo do post aqui..." required>
             </div>
         </div>
         <div class="modalCreatePost__buttons">

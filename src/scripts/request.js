@@ -1,9 +1,13 @@
+import { toast } from './register.js';
+import { toastDelete } from './homePost.js';
+
 const baseUrl = 'http://localhost:3333';
 const tokenLocalStorage = JSON.parse(localStorage.getItem('@petInfoToken:token'));
 const requestHeaders = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${tokenLocalStorage}`
 }
+
 export const login = async (loginBody) => {
     const token = await fetch(`${baseUrl}/login`, {
         method: 'POST',
@@ -60,12 +64,12 @@ export const registerNewUser = async (createRegisterBody) => {
     })
         .then(response => {
             if (response.ok) {
-                alert('Sua conta foi criada com sucesso');
+                toast('Usuário cadastrado com sucesso');
                 return response.json();
             } else {
                 response.json()
                     .then(responseError => {
-                        alert(responseError.message);
+                        return toast(responseError.message);
                     })
             }
         })
@@ -73,7 +77,6 @@ export const registerNewUser = async (createRegisterBody) => {
 }
 
 export const requestCreateNewPost = async (createPostBody) => {
-    // console.log(requestHeaders.Authorization)
     const post = await fetch(`${baseUrl}/posts/create`, {
         method: 'POST',
         headers: {
@@ -86,14 +89,14 @@ export const requestCreateNewPost = async (createPostBody) => {
             if (response.ok) {
                 const postJson = response.json()
                     .then(responseJson => {
-                        alert('Post criado com sucesso');
+                        console.log(('Post criado com sucesso'));
                         return responseJson;
                     })
                 return postJson;
             } else {
                 response.json()
                     .then(responseError => {
-                        return alert(responseError.message);
+                        return console.log((responseError.message));
                     })
             }
         });
@@ -131,12 +134,12 @@ export const requestUpdatePost = async (postId, updatePostBody) => {
         body: JSON.stringify(updatePostBody)
     }).then((response) => {
         if (response.ok) {
-            alert('Post atualizado com sucesso');
+            console.log(('Post atualizado com sucesso'));
             return response.json();
         } else {
             response.json()
                 .then(responseError => {
-                    return alert(responseError.message);
+                    return console.log((responseError.message));
                 });
         };
     });
@@ -153,13 +156,12 @@ export const requestDeletePost = async (postId) => {
     })
         .then(response => {
             if (response.ok) {
-                alert('Post deletado com sucesso');
-                // localStorage.clear(); //Limpo o localStorage para tirar o acesso do usuário a aplicação.
+                toastDelete('Post deletado com sucesso');
                 return response.json();
             } else {
                 response.json()
                     .then(responseError => {
-                        return alert(responseError.message);
+                        return console.log((responseError.message));
                     });
             };
         });
