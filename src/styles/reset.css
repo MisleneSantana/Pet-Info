@@ -113,6 +113,7 @@ section {
 body {
 	line-height: 150%;
 	box-sizing: border-box;
+	outline: none;
 }
 
 ol,

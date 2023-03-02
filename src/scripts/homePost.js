@@ -1,6 +1,7 @@
 import { requestGetloggedUser, requestCreateNewPost, requestGetAllPosts, requestUpdatePost, requestDeletePost } from './request.js';
 
 let arrayAllPosts = [];
+let currentUser = { id: '' };
 
 function authentication() {
     const token = localStorage.getItem('@petInfoToken:token')
@@ -10,7 +11,7 @@ function authentication() {
     }
 };
 
-// POST
+// CRIAR POSTS
 function renderModalCreatePost() {
     let modalTag = document.querySelector('#modalControl-createPost');
     let containerModal = document.createElement('form');
@@ -36,6 +37,7 @@ function renderModalCreatePost() {
     containerMainModal.setAttribute('class', 'modalCreatePost__main');
 
     containerMainInputTitle.setAttribute('class', 'modalCreatePost__inputs');
+    tagTitle.setAttribute('class', 'modalCreatePost__inputs--title');
     tagTitle.for = 'title';
     tagTitle.innerText = 'Título do Post'
     inputTitle.setAttribute('class', 'modalCreatePost__inputPost');
@@ -45,6 +47,7 @@ function renderModalCreatePost() {
     inputTitle.placeholder = 'Digite o título aqui...';
 
     containerMainInputContent.setAttribute('class', 'modalCreatePost__inputs');
+    tagContent.setAttribute('class', 'modalCreatePost__inputs--content');
     tagContent.for = 'content';
     tagContent.innerText = 'Conteúdo do Post';
     inputContent.setAttribute('class', 'modalCreatePost__inputPost');
@@ -118,7 +121,6 @@ function handleNewPost() {
 
             arrayAllPosts.push(post);
             renderArrAllPosts(arrayAllPosts);
-
             return post;
         }
     });
@@ -126,8 +128,6 @@ function handleNewPost() {
 
 async function getAllPostsFromServer() {
     arrayAllPosts = await requestGetAllPosts();
-
-    renderArrAllPosts(arrayAllPosts);
 };
 
 function renderArrAllPosts(array) {
@@ -137,7 +137,6 @@ function renderArrAllPosts(array) {
 
     array.forEach((post) => {
         let itemPost = createCardPost(post);
-
         listPosts.appendChild(itemPost);
     });
 
@@ -151,7 +150,10 @@ function createCardPost(post) {
     let imageUser = document.createElement('img');
     let nameUser = document.createElement('p');
     let dataPost = document.createElement('small');
+    let small = document.createElement('small');
     let containerUserButtons = document.createElement('div');
+    // let editButton = {};
+    // let deleteButton = {};
     let editButton = document.createElement('button');
     let deleteButton = document.createElement('button');
     let postContainer = document.createElement('div');
@@ -169,55 +171,51 @@ function createCardPost(post) {
     nameUser.innerText = post.user.username;
     dataPost.setAttribute('class', 'main__postUser--data');
     dataPost.innerText = new Date(post.createdAt).toLocaleDateString();
-
+    small.innerHTML = '|';
+    small.setAttribute('class', 'main__postUser--character');
     containerUserButtons.setAttribute('class', 'main__postUser--buttons');
     editButton.setAttribute('class', 'main__postUser--edit');
     editButton.innerText = 'Editar';
     deleteButton.setAttribute('class', 'main__postUser--delete');
     deleteButton.innerHTML = 'Excluir';
+
+    // if (currentUser.id !== post.user.id) {
+    //     editButton = document.createElement('button');
+    //     deleteButton = document.createElement('button');
+    //     editButton.setAttribute('class', 'main__postUser--edit');
+    //     editButton.innerText = 'Editar';
+    //     deleteButton.setAttribute('class', 'main__postUser--delete');
+    //     deleteButton.innerHTML = 'Excluir';
+    //     containerUserButtons.append(editButton, deleteButton);
+    // };
+
     postContainer.setAttribute('class', 'main__postContent');
     postTitle.innerText = post.title;
 
-    let cutContentPost = post.content.indexOf('.');
+    // let cutContentPost = post.content.indexOf('.');
+    // if (cutContentPost === -1) {  //Caso não encontra o (.)
+    //     cutContentPost = post.content.length;
+    // };
 
-    if (cutContentPost === -1) {  //Caso não encontra o (.)
-        cutContentPost = post.content.length;
-    };
-
-    contentPost.innerText = `${post.content.substring(0, cutContentPost)}...`;
+    contentPost.innerText = `${post.content.substring(0, 145)}...`;
     containerShowPost.setAttribute('class', 'main__post--buttonModal');
     buttonShowPost.id = `showModal_${post.id}`;
     buttonShowPost.innerText = 'Acessar publicação'
 
     listPost.append(containerPostUser, postContainer, containerShowPost);
     containerPostUser.append(containerUser, containerUserButtons);
-    containerUser.append(imageUser, nameUser, dataPost);
+    containerUser.append(imageUser, nameUser, small, dataPost);
     containerUserButtons.append(editButton, deleteButton);
     postContainer.append(postTitle, contentPost);
     containerShowPost.appendChild(buttonShowPost);
 
-    // createImageUserLogged(post);
     addEventButtonOpenPost(buttonShowPost, post); //Evento button showModal;
     addEventButtonEditPost(editButton, post); //Evento button Editar;
     addEventButtonDeletePost(deleteButton, post); //Evento button Excluir;
-    authenticateLoggedUser(post);
     return listPost;
 };
 
-// USER
-function createImageUserLogged(post) {
-    const navContainer = document.querySelector('.nav__container');
-    const userImage = document.createElement('img');
-
-    userImage.setAttribute('class', 'nav__userImage');
-    userImage.src = post.user.avatar;
-    userImage.alt = 'Photo User';
-
-    navContainer.appendChild(userImage);
-    return navContainer;
-};
-
-// PATCH
+// ALTERAR POSTS
 function renderModalPost() {
     let modal = document.querySelector('#modalControl-showPost');
     let containerModal = document.createElement('div');
@@ -225,6 +223,7 @@ function renderModalPost() {
     let containerUser = document.createElement('div');
     let userPhoto = document.createElement('img');
     let userName = document.createElement('p');
+    let small = document.createElement('small');
     let postDate = document.createElement('small');
     let buttonCloseModal = document.createElement('img');
     let containerContentPost = document.createElement('div');
@@ -237,6 +236,8 @@ function renderModalPost() {
     userPhoto.setAttribute('class', 'modalShowPost__avatar');
     userPhoto.alt = 'userPhoto';
     userName.setAttribute('class', 'modalShowPost__username');
+    small.setAttribute('class', 'modalShowPost__character');
+    small.innerText = '|';
     postDate.setAttribute('class', 'modalShowPost__createdAt');
 
     buttonCloseModal.setAttribute('class', 'closeModalPost');
@@ -250,7 +251,7 @@ function renderModalPost() {
     modal.appendChild(containerModal);
     containerModal.append(headerContainer, containerContentPost);
     headerContainer.append(containerUser, buttonCloseModal);
-    containerUser.append(userPhoto, userName, postDate);
+    containerUser.append(userPhoto, userName, small, postDate);
     containerContentPost.append(titlePost, textPost);
 
     addEventCloseModalPost();     // Fechando o modal
@@ -284,9 +285,6 @@ function updateModalPost(post) {
     postDate.innerText = new Date(post.createdAt).toLocaleDateString();
     modalTitle.innerText = post.title;
     modalPost.innerText = post.content;
-
-    // console.log(post);
-    // console.log(postDate);
 };
 
 function addEventCloseModalPost() {
@@ -332,7 +330,7 @@ function renderModalEditPost() {
     areaContent.name = 'content';
     areaContent.id = 'content';
     containerButtons.setAttribute('class', 'modalPatchPost__buttons');
-    cancelButton.setAttribute('class', 'modalPatchPost__buttons--calcel');
+    cancelButton.setAttribute('class', 'modalPatchPost__buttons--cancel');
     cancelButton.type = 'submit';
     cancelButton.innerText = 'Cancelar';
     buttonSave.setAttribute('class', 'modalPatchPost__buttons--toSave');
@@ -349,9 +347,8 @@ function renderModalEditPost() {
     return modalEditPost;
 };
 
-function addEventButtonEditPost(buttonOpenModal, post) {
-    buttonOpenModal.addEventListener('click', (event) => {
-        event.preventDefault();
+function addEventButtonEditPost(editButton, post) {
+    editButton.addEventListener('click', () => {
         OpenModalFormEditPost(post); //Chamando a função abrir modal
     });
 };
@@ -392,7 +389,9 @@ const handleUpdatePost = (post) => {
                 updatePostBody.content = contentPostTextarea.value;
             }
             await requestUpdatePost(postId, updatePostBody);
-            await getAllPostsFromServer(arrayAllPosts);
+            // await getAllPostsFromServer(arrayAllPosts);
+            // arrayAllPosts.push(updatePostBody);
+            renderArrAllPosts(arrayAllPosts);
         });
     }
 };
@@ -406,11 +405,12 @@ function addEventCloseModalFormEditPost() {
         modal.close();
     });
     buttonSave.addEventListener('click', (event) => {
+        event.preventDefault();
         modal.close();
     })
 };
 
-// DELETE
+// DELETAR POSTS
 function renderModalDeletePost() {
     const modalDeletePost = document.querySelector('#modalControl-deletePost');
     const formContainer = document.createElement('form');
@@ -425,9 +425,12 @@ function renderModalDeletePost() {
 
     formContainer.setAttribute('class', 'modalDeletePost__container');
     headerContainer.setAttribute('class', 'modalDeletePost__header');
+    headerTitle.innerText = 'Confirmação de exclusão'
     buttonCloseModal.setAttribute('class', 'modalDeletePost__imgClose');
     buttonCloseModal.src = '../assets/img/FecharModal.svg';
     buttonCloseModal.alt = 'Button X';
+    titleAlert.innerText = 'Tem certeza que deseja excluir este post?';
+    contentAlert.innerText = 'Essa ação não poderá ser desfeita, então pedimos que tenha confirme antes de concluir';
     buttonsContainer.setAttribute('class', 'modalDeletePost__buttons');
     buttonCancel.type = 'submit';
     buttonCancel.innerText = 'Cancelar';
@@ -487,19 +490,48 @@ function addEventCloseModal() {
     });
 };
 
-// 
+// VISUALIZAR OPÇÕES EDITAR/EXCLUIR
 async function getUserDataLogged() {
-    const user = await requestGetloggedUser();
-    console.log(user);
-    return user;
+    currentUser = await requestGetloggedUser();
+    console.log(currentUser);
+    createImageUserLogged(currentUser);
+    renderArrAllPosts(arrayAllPosts);
 };
 
-async function authenticateLoggedUser(post) {
-    const user = await getUserDataLogged();
-    const containerButtonsEditAndDelete = document.querySelector('.main__postUser--buttons');
-    if (user.id !== post.user.id) {
-        containerButtonsEditAndDelete.style.display = 'none';
-    };
+// async function authenticateLoggedUser(post) {
+//     const user = await getUserDataLogged();
+//     const containerButtonsEditAndDelete = document.querySelectorAll('.main__postUser--buttons');
+//     if (user.id !== post.user.id) {
+//         containerButtonsEditAndDelete.style.display = 'none';
+//     };
+// };
+
+// RENDERIZAR USER LOGADO
+function createImageUserLogged(currentUser) {
+    const navContainer = document.querySelector('.nav__container');
+    const logoutContainer = document.querySelector('.logout__header');
+    const userImage = document.createElement('img');
+    const username = document.createElement('p');
+
+    userImage.setAttribute('class', 'nav__userImage');
+    userImage.src = currentUser.avatar;
+    userImage.alt = 'Photo User';
+    username.setAttribute('class', 'header__logout--username');
+    username.innerText = `@${currentUser.username}`.toLowerCase().replace(' ', '');
+    navContainer.appendChild(userImage);
+    logoutContainer.appendChild(username);
+
+    return navContainer;
+};
+
+// MODAL SAIR:
+function showModalLogout() {
+    const containerModal = document.querySelector('#logout__container');
+    const userImage = document.querySelector('.nav__userImage');
+
+    userImage.addEventListener(('click', async () => {
+        await containerModal.showModal();
+    }));
 };
 
 // authentication();
@@ -508,9 +540,11 @@ addEventOpenModalCreatePost();
 addEventCloseModalCreatePost();
 handleNewPost();
 getAllPostsFromServer();
+getUserDataLogged();
 renderModalPost();
 renderModalEditPost();
 handleUpdatePost();
 renderModalDeletePost();
+// showModalLogout();
 
 

@@ -93,7 +93,7 @@ export const requestCreateNewPost = async (createPostBody) => {
             } else {
                 response.json()
                     .then(responseError => {
-                        alert(responseError.message);
+                        return alert(responseError.message);
                     })
             }
         });
@@ -113,7 +113,7 @@ export const requestGetAllPosts = async () => {
                 return response.json();
             } else {
                 response.json().then(responseError => {
-                    alert(responseError.message);
+                    return alert(responseError.message);
                 });
             };
         });
@@ -136,7 +136,7 @@ export const requestUpdatePost = async (postId, updatePostBody) => {
         } else {
             response.json()
                 .then(responseError => {
-                    alert(responseError.message);
+                    return alert(responseError.message);
                 });
         };
     });
@@ -159,8 +159,8 @@ export const requestDeletePost = async (postId) => {
             } else {
                 response.json()
                     .then(responseError => {
-                        alert(responseError.message);
-                    })
+                        return alert(responseError.message);
+                    });
             };
         });
     return deletePost;
