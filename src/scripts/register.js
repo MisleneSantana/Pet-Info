@@ -1,10 +1,10 @@
 import { registerNewUser } from './request.js';
 
 function authentication() {
-    const tokenLocalStorage = localStorage.getItem('@petInfoToken:token');
+    const token = localStorage.getItem('@petInfoToken:token');
 
-    if (tokenLocalStorage) {
-        window.location.replace('./src/pages/homePost.html');
+    if (token) {
+        window.location.replace('./homePost.html');
     }
 }
 
@@ -29,7 +29,7 @@ function handleNewUser() {
         });
 
         if (emptyInput !== 0) {
-            return alert('Por favor preencha todos os campos e tente novamente');
+            return toastResponseError('Por favor preencha todos os campos e tente novamente');
         } else {
 
             const newUser = await registerNewUser(createRegisterBody);
@@ -83,6 +83,34 @@ export const toast = (message) => {
         body.removeChild(container);
     }, 4990);
 }
+
+// TOAST ERROR:
+export const toastResponseError = (message) => {
+    const body = document.querySelector('body');
+    const container = document.createElement('div');
+    const containerImage = document.createElement('div');
+    const icon = document.createElement('img');
+    const mainMessage = document.createElement('p');
+
+    container.classList.add('toast__containerError', 'toast__addError');
+    containerImage.classList.add('toast__containerError--image');
+    icon.src = '../assets/img/close (1).png';
+    icon.alt = 'error-check';
+
+    mainMessage.innerText = message;
+
+    container.append(containerImage, mainMessage);
+    containerImage.appendChild(icon);
+    body.appendChild(container);
+
+    setTimeout(() => {
+        container.classList.add('toast__removeError');
+    }, 3000)
+
+    setTimeout(() => {
+        body.removeChild(container);
+    }, 4990);
+};
 
 handleNewUser();
 // authentication();

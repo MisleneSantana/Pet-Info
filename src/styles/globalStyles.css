@@ -2,6 +2,7 @@ body {
   font-family: var(--font-main-font);
   width: 99vw;
   overflow-x: hidden;
+  position: relative;
 }
 
 :root {

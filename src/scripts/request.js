@@ -1,5 +1,6 @@
 import { toast } from './register.js';
 import { toastDelete } from './homePost.js';
+import { toastResponseError } from './register.js';
 
 const baseUrl = 'http://localhost:3333';
 const tokenLocalStorage = JSON.parse(localStorage.getItem('@petInfoToken:token'));
@@ -49,8 +50,8 @@ export const requestGetloggedUser = async () => {
             } else {
                 response.json()
                     .then(responseError => {
-                        alert(responseError.message);
-                    })
+                        return toastResponseError(responseError.message);
+                    });
             };
         });
     return userLoged;
@@ -62,14 +63,14 @@ export const registerNewUser = async (createRegisterBody) => {
         headers: requestHeaders,
         body: JSON.stringify(createRegisterBody)
     })
-        .then(response => {
+        .then((response) => {
             if (response.ok) {
                 toast('Usuário cadastrado com sucesso');
                 return response.json();
             } else {
                 response.json()
                     .then(responseError => {
-                        return toast(responseError.message);
+                        return toastResponseError(responseError.message);
                     })
             }
         })
@@ -116,11 +117,11 @@ export const requestGetAllPosts = async () => {
                 return response.json();
             } else {
                 response.json().then(responseError => {
-                    return alert(responseError.message);
+                    return toastResponseError(responseError.message);
                 });
             };
         });
-    console.log(posts);
+    // console.log(posts);
     return posts;
 }
 
@@ -139,7 +140,7 @@ export const requestUpdatePost = async (postId, updatePostBody) => {
         } else {
             response.json()
                 .then(responseError => {
-                    return console.log((responseError.message));
+                    return toastResponseError((responseError.message));
                 });
         };
     });

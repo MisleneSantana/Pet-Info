@@ -1,4 +1,5 @@
 import { requestGetloggedUser, requestCreateNewPost, requestGetAllPosts, requestUpdatePost, requestDeletePost } from './request.js';
+import { toastResponseError } from './register.js';
 
 let arrayAllPosts = [];
 let currentUser = {};
@@ -121,7 +122,7 @@ function handleNewPost() {
         });
 
         if (count !== 0) {
-            return alert('Por favor preencha todos os campos antes de publicar');
+            return toastResponseError('Por favor preencha todos os campos antes de publicar');
         } else {
             const post = await requestCreateNewPost(createPostBody);
 
@@ -535,8 +536,16 @@ function showLogout() {
     if (!userImage) return;
 
     userImage.addEventListener('click', () => {
-        console.log('oi');
         containerLogout.classList.toggle('showLogout');
+
+        const eventLogout = document.querySelector('.logout__exit');
+        if (!eventLogout) return;
+
+        eventLogout.addEventListener("click", () => {
+            console.log('sair');
+            localStorage.clear();
+            window.location.replace("../../index.html");
+        });
     });
 };
 
@@ -558,7 +567,6 @@ export const toastDelete = (message) => {
     icon.alt = 'icon-check';
 
     mainMessage.innerText = message;
-    console.log(mainMessage);
     messageComplement.innerText = 'O post selecionado para exclusão foi deletado e a partir de agora não aparecerá no seu feed. ';
 
     containerResponse.append(iconContainer, mainMessage)
@@ -578,6 +586,7 @@ export const toastDelete = (message) => {
 }
 
 
+
 // authentication();
 renderModalCreatePost();
 addEventOpenModalCreatePost();
@@ -589,4 +598,5 @@ renderModalPost();
 renderModalEditPost();
 handleUpdatePost();
 renderModalDeletePost();
+
 

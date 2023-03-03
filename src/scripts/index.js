@@ -1,9 +1,10 @@
 import { login } from './request.js';
 
 function authentication() {
-    const tokenLocalStorage = localStorage.getItem('@petInfoToken:token');
+    const token = localStorage.getItem('@petInfoToken:token');
 
-    if (tokenLocalStorage) {
+    if (token) {
+        console.log(token);
         window.location.replace('./src/pages/homePost.html');
     }
 }
