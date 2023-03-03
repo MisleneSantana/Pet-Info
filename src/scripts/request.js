@@ -20,7 +20,7 @@ export const login = async (loginBody) => {
                 const responseJson = response.json()
                     .then(responseSucess => {
                         localStorage.setItem('@petInfoToken:token', JSON.stringify(responseSucess));
-                        window.location.replace('./src/pages/homepost.html');
+                        window.location.replace('./src/pages/homePost.html');
                         return responseSucess;
                     })
                 return responseJson;

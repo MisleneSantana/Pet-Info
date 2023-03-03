@@ -4,7 +4,7 @@ function authentication() {
     const token = localStorage.getItem('@petInfoToken:token');
 
     if (token) {
-        window.location.replace('../pages/homepost.html');
+        window.location.replace('../pages/homePost.html');
     }
 }
 
