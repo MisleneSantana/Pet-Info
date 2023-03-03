@@ -1,4 +1,4 @@
-import { toastResponseError } from './register.js';
+import { toastResponseError } from './toasts.js';
 import { requestGetloggedUser, requestCreateNewPost, requestGetAllPosts, requestUpdatePost, requestDeletePost } from './request.js';
 
 let arrayAllPosts = [];
@@ -6,10 +6,10 @@ let currentUser = {};
 
 function authentication() {
     const token = localStorage.getItem('@petInfoToken:token');
-
     if (!token) {
-        window.location.replace('../../index.html')
-    }
+        console.log('oi')
+        window.location.replace('../../index.html');
+    };
 };
 
 // CRIAR POSTS
@@ -579,7 +579,7 @@ function showLogout() {
         if (!eventLogout) return;
 
         eventLogout.addEventListener("click", () => {
-            console.log('sair');
+            // console.log('sair');
             localStorage.clear();
             window.location.replace("../../index.html");
         });
@@ -587,7 +587,7 @@ function showLogout() {
 };
 
 
-// authentication();
+authentication();
 renderModalCreatePost();
 addEventOpenModalCreatePost();
 addEventCloseModalCreatePost();

@@ -400,7 +400,7 @@
 .edit__input:focus,
 .edit__textarea:focus {
     outline: none;
-    border: 1px solid var(--gray500);
+    border: 1px solid var(--gray100);
 }
 
 .modalCreatePost__buttons {

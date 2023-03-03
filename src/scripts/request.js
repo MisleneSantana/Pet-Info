@@ -1,5 +1,5 @@
-import { toastDelete } from './index.js';
-import { toast, toastResponseError } from './register.js';
+import { toastDelete } from './toasts.js';
+import { toast, toastResponseError } from './toasts.js';
 
 const baseUrl = 'http://localhost:3333';
 const tokenLocalStorage = JSON.parse(localStorage.getItem('@petInfoToken:token'));
@@ -20,7 +20,7 @@ export const login = async (loginBody) => {
                 const responseJson = response.json()
                     .then(responseSucess => {
                         localStorage.setItem('@petInfoToken:token', JSON.stringify(responseSucess));
-                        window.location.replace('./src/pages/homePost.html');
+                        window.location.replace('./src/pages/homepost.html');
                         return responseSucess;
                     })
                 return responseJson;

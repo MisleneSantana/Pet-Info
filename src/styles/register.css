@@ -242,15 +242,16 @@
 }
 
 .toast__containerError--image {
-    width: 1.5625rem;
-    height: 1.5625rem;
+    width: 1.75rem;
+    height: 1.75rem;
     background-color: var(--alert100);
+    border: 1px solid var(--alert100);
     border-radius: 50%;
     display: flex;
 }
 
-.toast__containerError--image>img{
-    padding: 0.3125rem;
+.toast__containerError--image>img {
+    padding: 0.5rem;
 }
 
 .toast__containerError>p {

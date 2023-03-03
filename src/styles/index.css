@@ -124,7 +124,7 @@
 .form__inputs>div {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .form__inputs>div>label {
