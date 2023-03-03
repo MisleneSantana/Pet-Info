@@ -160,7 +160,8 @@
     gap: 1rem;
 }
 
-TOAST .toast__container {
+/* TOAST */
+.toast__container {
     position: absolute;
     bottom: 2rem;
     right: 2rem;
@@ -222,10 +223,10 @@ TOAST .toast__container {
     animation: toastOut 2s linear;
 }
 
-/* TOAST */
+/* TOAST ERROR */
 .toast__containerError {
     position: absolute;
-    bottom: 2rem;
+    top: 2rem;
     right: 2rem;
     padding: 2rem;
 

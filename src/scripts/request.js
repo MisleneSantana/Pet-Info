@@ -1,9 +1,9 @@
-import { toast } from './register.js';
-import { toastDelete } from './homePost.js';
-import { toastResponseError } from './register.js';
+import { toastDelete } from './index.js';
+import { toast, toastResponseError } from './register.js';
 
 const baseUrl = 'http://localhost:3333';
 const tokenLocalStorage = JSON.parse(localStorage.getItem('@petInfoToken:token'));
+// console.log(tokenLocalStorage.token);
 const requestHeaders = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${tokenLocalStorage}`

@@ -4,7 +4,7 @@ function authentication() {
     const token = localStorage.getItem('@petInfoToken:token');
 
     if (token) {
-        window.location.replace('./homePost.html');
+        window.location.replace('./homepost.html');
     }
 }
 
@@ -36,7 +36,7 @@ function handleNewUser() {
 
             setTimeout(() => {
                 window.location.replace('../../index.html');
-            }, 2000);
+            }, 3000);
 
             console.log(newUser);
             return newUser;
@@ -112,7 +112,7 @@ export const toastResponseError = (message) => {
     }, 4990);
 };
 
-handleNewUser();
 // authentication();
+handleNewUser();
 
 

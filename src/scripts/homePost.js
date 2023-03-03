@@ -1,11 +1,11 @@
-import { requestGetloggedUser, requestCreateNewPost, requestGetAllPosts, requestUpdatePost, requestDeletePost } from './request.js';
 import { toastResponseError } from './register.js';
+import { requestGetloggedUser, requestCreateNewPost, requestGetAllPosts, requestUpdatePost, requestDeletePost } from './request.js';
 
 let arrayAllPosts = [];
 let currentUser = {};
 
 function authentication() {
-    const token = localStorage.getItem('@petInfoToken:token')
+    const token = localStorage.getItem('@petInfoToken:token');
 
     if (!token) {
         window.location.replace('../../index.html')
@@ -13,6 +13,8 @@ function authentication() {
 };
 
 // CRIAR POSTS
+
+// CRIA MODAL CREATE POST:
 function renderModalCreatePost() {
     let modalTag = document.querySelector('#modalControl-createPost');
     if (!modalTag) return;
@@ -78,6 +80,7 @@ function renderModalCreatePost() {
     return modalTag;
 };
 
+// ADICIONA EVENT AO BOTÃO CRIAR PUBLICAÇÃO (ABRE O MODAL):
 function addEventOpenModalCreatePost() {
     const modal = document.querySelector('#modalControl-createPost');
     if (!modal) return;
@@ -88,6 +91,7 @@ function addEventOpenModalCreatePost() {
     });
 };
 
+// ADICIONA EVENT AOS BOTÕES (X) E CANCELAR (FECHAR MODAL CREATE POST):
 function addEventCloseModalCreatePost() {
     let modal = document.querySelector('#modalControl-createPost');
     if (!modal) return;
@@ -103,6 +107,14 @@ function addEventCloseModalCreatePost() {
     });
 };
 
+// PEGA ARRAY VAZIO DECLARADO GLOBALMENTE E ATRIBUI A ELE O ARRAY POSTS CRIADOS VINDOS DO SERVIDOR (REQUEST):
+async function getAllPostsFromServer() {
+    arrayAllPosts = await requestGetAllPosts();
+    // console.log(arrayAllPosts);
+};
+
+// CAPTURA AS ENTRADAS DO CREATE POST. MONTA O CORPO DE DA REQUISIÇÃO (COM UM forEach()), PARA PASSAR COMO PARÂMETRO PARA A REQUEST POST(CREATE POST).
+// QUANDO OS VALORES RETORNAM DO SERVIDOR, SÃO INSERIDOS DENTRO DO ARRAY E RENDERIZADOS EM TELA:
 function handleNewPost() {
     const inputsModalPost = document.querySelectorAll('.modalCreatePost__inputPost');
     const buttonPublish = document.querySelector('.modalCreatePost__buttons--publish');
@@ -137,10 +149,7 @@ function handleNewPost() {
     });
 };
 
-async function getAllPostsFromServer() {
-    arrayAllPosts = await requestGetAllPosts();
-};
-
+// APÓS O POST ESTAR CRIADO, ELE SERÁ ANEXADO NA UL E RENDERIZADO EM TELA:
 function renderArrAllPosts(array) {
     let listPosts = document.querySelector('.post__container');
 
@@ -154,6 +163,8 @@ function renderArrAllPosts(array) {
     return listPosts;
 };
 
+// CRIA O CARD DO POST.
+// APLICA CRIA OS BOTÕES EDITAR E EXCLUIR SOMENTE CASO O ID DO POST COINCIDA COM O ID DO USUÁRIO LOGADO:
 function createCardPost(post) {
     let listPost = document.createElement('li');
     let containerPostUser = document.createElement('div');
@@ -183,15 +194,32 @@ function createCardPost(post) {
 
     //const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const options = { month: 'long', year: 'numeric' };
-    const createDatePost = new Date(post.createdAt).toLocaleDateString("pt-BR", options);
-    dataPost.innerText = createDatePost.charAt(0).toUpperCase() + createDatePost.slice(1);
+    const currenteDatePost = new Date(post.createdAt).toLocaleDateString("pt-BR", options);
+    dataPost.innerText = currenteDatePost.charAt(0).toUpperCase() + currenteDatePost.slice(1);
 
     small.innerHTML = '|';
     small.setAttribute('class', 'main__postUser--character');
     postContainer.setAttribute('class', 'main__postContent');
     postTitle.innerText = post.title;
 
-    contentPost.innerText = `${post.content.substring(0, 145)}...`;
+    // let cutContent = '';
+    // if (post.content.length < 145) {
+
+    //     cutContent = post.content;
+    // } else {
+    //     for (let i = 145; i < post.content.length; i++) {
+    //         if (post.content[i] === ' ') {
+    //             cutContent = post.content.substring(0, i);
+    //             return cutContent;
+    //         } else if (i === post.content.length - 1) {
+    //             cutContent = post.content;
+    //             return cutContent;
+    //         };
+    //     };
+    // };
+    // contentPost.innerText = `${cutContent}...`;
+
+    contentPost.innerText = `${post.content.substring(0, 146)}...`;
     containerShowPost.setAttribute('class', 'main__post--buttonModal');
     buttonShowPost.id = `showModal_${post.id}`;
     buttonShowPost.innerText = 'Acessar publicação'
@@ -203,6 +231,8 @@ function createCardPost(post) {
     containerShowPost.appendChild(buttonShowPost);
 
     if (currentUser.id === post.user.id) {
+        // console.log(currentUser.id);
+        // console.log(post.user.id);
         containerUserButtons = document.createElement('div');
         editButton = document.createElement('button');
         deleteButton = document.createElement('button');
@@ -289,7 +319,11 @@ function updateModalPost(post) {
     userPhoto.src = post.user.avatar;
     userPhoto.alt = post.user.username;
     userName.innerText = post.user.username;
-    postDate.innerText = new Date(post.createdAt).toLocaleDateString();
+
+    const options = { month: 'long', year: 'numeric' };
+    const currentDatePostModal = new Date(post.createdAt).toLocaleDateString("pt-BR", options);
+    postDate.innerText = currentDatePostModal.charAt(0).toUpperCase() + currentDatePostModal.slice(1);
+
     modalTitle.innerText = post.title;
     modalPost.innerText = post.content;
 };
@@ -380,7 +414,7 @@ function updateModalFormEditPost(post) {
     handleUpdatePost(post);
 };
 
-const handleUpdatePost = (post) => {
+function handleUpdatePost(post) {
     const titlePostInput = document.querySelector('.edit__input');
     const contentPostTextarea = document.querySelector('.edit__textarea');
     const buttonSave = document.querySelector('.modalPatchPost__buttons--toSave');
@@ -401,6 +435,8 @@ const handleUpdatePost = (post) => {
             let updatedPostClient = arrayAllPosts.find((element) => element.id === post.id);
             updatedPostClient.content = updatePostBody.content;
             updatedPostClient.title = updatePostBody.title;
+            // console.log(updatedPostClient.content);
+            // console.log(updatePostBody.title);
 
             renderArrAllPosts(arrayAllPosts);
         });
@@ -505,6 +541,7 @@ function addEventCloseModal() {
 // VISUALIZAR OPÇÕES EDITAR/EXCLUIR
 async function getUserDataLogged() {
     currentUser = await requestGetloggedUser();
+    // console.log(currentUser);
 
     createImageUserLogged(currentUser);
     renderArrAllPosts(arrayAllPosts);
@@ -529,7 +566,7 @@ function createImageUserLogged(currentUser) {
     return imageContainer;
 };
 
-// MODAL SAIR:
+// CONTAINER LOGOUT:
 function showLogout() {
     const containerLogout = document.querySelector('.logout__header');
     const userImage = document.querySelector('.nav__imageContainer');
@@ -549,50 +586,13 @@ function showLogout() {
     });
 };
 
-// TOAST POST DELETADO COM SUCESSO:
-export const toastDelete = (message) => {
-    const body = document.querySelector('body');
-    const container = document.createElement('div');
-
-    const containerResponse = document.createElement('div')
-    const iconContainer = document.createElement('div');
-    const icon = document.createElement('img');
-    const mainMessage = document.createElement('p');
-    const messageComplement = document.createElement('p');
-
-    container.classList.add('toast__container', 'toast__add')
-    containerResponse.setAttribute('class', 'toast__containerResponse');
-    iconContainer.setAttribute('class', 'toast__iconContainer');
-    icon.src = '../assets/img/check-solid (2).svg';
-    icon.alt = 'icon-check';
-
-    mainMessage.innerText = message;
-    messageComplement.innerText = 'O post selecionado para exclusão foi deletado e a partir de agora não aparecerá no seu feed. ';
-
-    containerResponse.append(iconContainer, mainMessage)
-    container.append(containerResponse, messageComplement);
-    iconContainer.appendChild(icon);
-
-    body.appendChild(container);
-
-
-    setTimeout(() => {
-        container.classList.add('toast__remove');
-    }, 3000)
-
-    setTimeout(() => {
-        body.removeChild(container);
-    }, 4990);
-}
-
-
 
 // authentication();
 renderModalCreatePost();
 addEventOpenModalCreatePost();
 addEventCloseModalCreatePost();
-handleNewPost();
 getAllPostsFromServer();
+handleNewPost();
 getUserDataLogged();
 renderModalPost();
 renderModalEditPost();
